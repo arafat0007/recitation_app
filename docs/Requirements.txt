@@ -1,0 +1,1104 @@
+---
+
+# Final App Requirements Document
+
+## Project Name
+
+**Mother’s Islamic Audio App**
+Modules: **Surah**, **Doa**, **Owaj**
+
+---
+
+# 1. Project Goal
+
+Build a **very simple Android app for elderly users** that allows them to:
+
+* listen to **Surah recitation**
+* listen to **Doa recitation**
+* read **Bengali meaning**
+* optionally read **Arabic text**
+* play **Owaj** videos from YouTube
+* save **bookmarks/favorites**
+* adjust **speed, theme, text size**, and core usability settings
+* receive **dynamic content updates** from the app creator without requiring a new app release
+
+The app must prioritize:
+
+* very simple interaction
+* large buttons
+* minimal confusion
+* quick access to content
+* Bengali UI
+* easy maintenance by the creator
+
+---
+
+# 2. Locked Version 1 Decisions
+
+These are fixed for Version 1 and should be treated as implementation constraints.
+
+## 2.1 Platform
+
+* Android only
+* portrait mode only
+
+## 2.2 UI Language
+
+* App UI language: **Bengali only**
+* English meaning: **not included in Version 1**
+* Arabic text: **supported where content is available**
+
+## 2.3 Surah and Doa Content
+
+* Required:
+
+  * Arabic recitation audio
+  * Bengali meaning text
+* Optional:
+
+  * Arabic text display
+  * Bengali explanation / tafsir / related notes as text
+  * Bengali meaning audio, if content is available
+
+## 2.4 Owaj Source
+
+* **YouTube only** in Version 1
+* No non-YouTube video source in Version 1
+
+## 2.5 Remote Content Strategy
+
+* Remote source will manage:
+
+  * titles
+  * Bengali meaning
+  * Arabic text
+  * audio URLs
+  * YouTube IDs
+  * thumbnail URLs
+  * sort order
+  * publish status
+* Creator updates content outside the mobile app
+
+## 2.6 Offline Scope
+
+* Settings and favorites must work offline
+* Last fetched content should remain visible offline
+* Offline media download is **not included** in Version 1
+
+## 2.7 YouTube-First Implementation Priority
+
+For the first implementation path, the app shall be built in this order:
+
+1. basic Android project foundation
+2. basic elderly-friendly UI design
+3. home screen with the 3 main modules visible
+4. Owaj / YouTube list screen
+5. Owaj / YouTube detail and playback
+6. remote Owaj / YouTube list management from the creator-controlled source
+7. favorites and settings integration
+8. Surah and Doa modules
+9. Surah and Doa audio playback
+10. remaining polish, testing, and release work
+
+This does not remove Surah and Doa from Version 1 scope. It only changes the implementation priority so the YouTube feature becomes the first usable feature.
+
+---
+
+# 3. Primary Users
+
+## 3.1 End User
+
+**Elderly mother / elderly listener**
+
+Characteristics:
+
+* may struggle with precise touch gestures
+* prefers large text and large tap targets
+* needs very few steps to start playback
+* prefers Bengali-first usage
+* may not be comfortable with deep navigation
+
+## 3.2 Admin / Creator
+
+**App creator (you)**
+
+Responsibilities:
+
+* add, edit, delete Surah / Doa / Owaj items
+* reorder items
+* publish / unpublish items
+* update remote lists without releasing a new APK
+
+---
+
+# 4. Scope
+
+## 4.1 In Scope for Version 1
+
+* Android app
+* 3 modules:
+
+  * Surah
+  * Doa
+  * Owaj
+* audio playback for Surah and Doa
+* speed control for recitation
+* Bengali meaning text
+* optional meaning audio playback if available
+* bookmark/favorite feature
+* theme setting
+* text size setting
+* dynamic remote content loading
+* offline cached content visibility
+* elderly-friendly UI
+
+## 4.2 Out of Scope for Version 1
+
+* iOS app
+* user login/signup for end users
+* comments
+* sharing
+* download/offline media sync
+* advanced admin panel
+* search
+* notifications
+* analytics dashboard
+* multilingual UI beyond Bengali
+* voice search
+
+---
+
+# 5. Product Vision
+
+The app should feel like a **simple home screen with 3 large choices**.
+
+A user should be able to:
+
+1. open the app
+2. tap **Surah**, **Doa**, or **Owaj**
+3. tap an item
+4. press one large **Play** button
+5. listen comfortably with adjustable speed
+
+Everything else should remain secondary.
+
+---
+
+# 6. Functional Requirements and Build Priority
+
+## 6.0 Build Priority Summary
+
+The detailed functional requirements remain the same, but development shall prioritize the YouTube/Owaj path first.
+
+Recommended implementation order:
+
+1. Foundation requirements
+2. Basic UI / home screen
+3. Owaj list, detail, and YouTube playback
+4. Remote Owaj / YouTube list loading and creator-controlled updates
+5. Favorites and settings
+6. Surah list/detail
+7. Doa list/detail
+8. Surah and Doa audio playback
+9. Full remote content integration for all modules
+10. offline fallback, polish, testing, and release
+
+## A. Foundation Requirements
+
+### FR-A1. Platform
+
+* The app shall run on Android phones.
+* The app shall support a modern minimum Android version chosen during development.
+* The app shall run in portrait orientation only.
+
+### FR-A2. Language and Content Support
+
+* The app UI shall be in Bengali.
+* Content items may include:
+
+  * Arabic text
+  * Bengali meaning
+  * Bengali explanation / tafsir / notes
+
+### FR-A3. Navigation
+
+* The app shall use simple navigation with minimal screen depth.
+* The main home screen shall show exactly 3 primary modules:
+
+  * Surah
+  * Doa
+  * Owaj
+* Separate access shall be available for:
+
+  * Favorites
+  * Settings
+
+---
+
+## B. Home Screen Requirements
+
+### FR-B1. Home Layout
+
+The home screen shall show:
+
+* app title
+* 3 large buttons/cards:
+
+  * Surah
+  * Doa
+  * Owaj
+* 1 entry point to Favorites
+* 1 entry point to Settings
+
+### FR-B2. Elderly-Friendly Design
+
+The home screen shall use:
+
+* large buttons
+* large Bengali labels
+* clear spacing
+* high contrast
+* minimal clutter
+* no hidden gestures
+
+### FR-B3. One-Tap Module Access
+
+A user shall be able to enter any main module with one tap.
+
+---
+
+## C. Surah Module Requirements
+
+### FR-C1. Surah List
+
+The Surah module shall display a list of Surah items.
+
+Each item may include:
+
+* title
+* short subtitle or preview
+* bookmark icon
+* open/play action
+
+### FR-C2. Surah Detail Screen
+
+When a user opens a Surah item, the app shall show:
+
+* Surah title
+* Arabic text, if available
+* Bengali meaning
+* Bengali explanation / tafsir / notes, if available
+* main play button
+* pause button
+* restart button
+* playback speed control
+* meaning audio toggle, if meaning audio exists
+* bookmark button
+
+### FR-C3. Surah Recitation Playback
+
+* The app shall play Arabic recitation audio for the selected Surah.
+
+### FR-C4. Speed Control
+
+The user shall be able to change recitation speed using preset values:
+
+* 0.75x
+* 1.0x
+* 1.25x
+* 1.5x
+
+### FR-C5. Meaning Audio Behavior
+
+* If Bengali meaning audio exists for a Surah, the app shall allow the user to enable or disable it.
+* If Bengali meaning audio does not exist, the app shall still display Bengali meaning text.
+
+### FR-C6. Meaning Display
+
+* The Surah detail screen shall display Bengali meaning text.
+
+### FR-C7. Playback Control
+
+The user shall be able to:
+
+* play
+* pause
+* resume
+* restart from beginning
+
+### FR-C8. Bookmark Surah
+
+* The user shall be able to add or remove a Surah from favorites.
+
+---
+
+## D. Doa Module Requirements
+
+### FR-D1. Doa List
+
+The Doa module shall display a list of Doa items.
+
+Each item may include:
+
+* title
+* short Bengali preview
+* bookmark icon
+* open/play action
+
+### FR-D2. Doa Detail Screen
+
+When a user opens a Doa item, the app shall show:
+
+* Doa title
+* when to read the Doa, if available
+* Arabic text, if available
+* Bengali meaning
+* Bengali notes / explanation, if available
+* main play button
+* pause button
+* restart button
+* speed control
+* meaning audio toggle, if meaning audio exists
+* bookmark button
+
+### FR-D3. Doa Playback
+
+* The app shall play Arabic recitation audio for the selected Doa.
+
+### FR-D4. Doa Meaning Audio
+
+* If Bengali meaning audio exists, the user shall be able to enable or disable it.
+
+### FR-D5. Bookmark Doa
+
+* The user shall be able to add or remove a Doa from favorites.
+
+---
+
+## E. Owaj Module Requirements
+
+### FR-E1. Owaj List
+
+The Owaj module shall display a list of available Owaj items.
+
+Each item may include:
+
+* title
+* speaker name
+* thumbnail
+* duration, if available
+* category, if available
+* bookmark icon
+
+### FR-E2. Owaj Playback
+
+* The user shall be able to play Owaj content from YouTube.
+
+### FR-E3. Owaj Source
+
+* Owaj content in Version 1 shall use YouTube video IDs or playlist-linked items only.
+
+### FR-E4. Owaj Detail Screen
+
+The app shall show:
+
+* title
+* speaker
+* play action
+* bookmark button
+* short description, if available
+
+### FR-E5. Bookmark Owaj
+
+* The user shall be able to add or remove an Owaj item from favorites.
+
+### FR-E6. Dynamic Replacement
+
+The creator shall be able to:
+
+* remove an old Owaj item
+* add a new Owaj item
+* reorder Owaj items
+* publish or unpublish items
+  without releasing a new app version
+
+---
+
+## F. Favorites Requirements
+
+### FR-F1. Unified Favorites
+
+* The app shall have one Favorites screen showing saved items from:
+
+  * Surah
+  * Doa
+  * Owaj
+
+### FR-F2. Type Preservation
+
+* Each favorite item shall preserve its content type.
+
+### FR-F3. Open from Favorites
+
+* Tapping a favorite item shall open the related detail screen.
+
+### FR-F4. Remove Favorite
+
+* The user shall be able to remove items from favorites.
+
+---
+
+## G. Settings Requirements
+
+### FR-G1. Settings Screen
+
+* The app shall provide a simple settings screen with large controls.
+
+### FR-G2. Theme Setting
+
+The user shall be able to choose:
+
+* light mode
+* dark mode
+* system default
+
+### FR-G3. Text Size
+
+The user shall be able to choose:
+
+* small
+* medium
+* large
+* extra large
+
+### FR-G4. Default Playback Speed
+
+* The user shall be able to set a default playback speed for Surah and Doa recitation.
+
+### FR-G5. Meaning Audio Default
+
+* The user shall be able to set whether meaning audio is enabled by default when available:
+
+  * ON
+  * OFF
+
+### FR-G6. Persist Settings
+
+* The app shall remember the user’s last selected settings locally.
+
+---
+
+## H. Dynamic Content Management Requirements
+
+### FR-H1. Remote Source
+
+* The app shall load Surah, Doa, and Owaj content metadata from a remote source controlled by the creator.
+
+### FR-H2. Creator Content Actions
+
+The creator shall be able to:
+
+* add item
+* edit item
+* delete item
+* reorder item
+* publish / unpublish item
+
+### FR-H3. Dynamic Update Fields
+
+Dynamic updates shall support:
+
+* title
+* subtitle / preview
+* Arabic text
+* Bengali meaning
+* Bengali notes / explanation
+* audio URLs
+* YouTube IDs
+* thumbnail URLs
+* sort order
+* category
+* publish status
+* updated timestamp
+
+### FR-H4. Refresh Behavior
+
+The app shall fetch updated content when:
+
+* the app opens
+* the user manually refreshes
+* the user enters a relevant list screen
+
+### FR-H5. Offline Fallback
+
+If internet is unavailable:
+
+* last fetched content shall remain visible if cached
+* favorites and settings shall still work
+* unavailable remote playback shall show a simple message
+
+### FR-H6. No End-User Admin Access
+
+* End users shall have no edit capability inside the app.
+
+---
+
+## I. Audio and Playback Requirements
+
+### FR-I1. Surah and Doa Audio
+
+* The app shall support playback of Surah and Doa audio from local or remote URLs.
+
+### FR-I2. Play Controls
+
+For Surah and Doa, the app shall provide:
+
+* play
+* pause
+* resume
+* restart
+
+### FR-I3. Speed Change
+
+* Playback speed shall affect Arabic recitation audio.
+
+### FR-I4. Optional Meaning Audio
+
+* If Bengali meaning audio is provided, the app shall support optional playback of that meaning audio.
+
+### FR-I5. Playback Continuity
+
+* If the user briefly leaves and returns, the app should preserve playback state where feasible.
+
+### FR-I6. Error Handling
+
+If audio fails to load:
+
+* a simple error message shall appear
+* the user shall be able to retry
+
+---
+
+## J. UI / UX Requirements for Elderly Use
+
+### FR-J1. Large Touch Targets
+
+* All important buttons shall use large touch areas.
+
+### FR-J2. Clear Labels
+
+* Important actions shall use clear Bengali text labels, not icon-only controls.
+
+### FR-J3. Minimal Steps
+
+Common actions shall require as few steps as possible.
+
+Examples:
+
+* Home → Surah → Item → Play
+* Home → Doa → Item → Play
+* Home → Owaj → Item → Play
+
+### FR-J4. No Complex Gestures
+
+The app shall not require:
+
+* swipe-only navigation
+* long press for core features
+* drag-and-drop for important actions
+
+### FR-J5. Readable Text
+
+* Bengali text shall be clearly readable at all supported text sizes.
+* Arabic text, where shown, shall also remain readable.
+
+### FR-J6. Visible State Feedback
+
+The app shall visibly show:
+
+* playing state
+* paused state
+* bookmarked state
+* loading state
+
+---
+
+## K. Data Requirements
+
+### FR-K1. Content Types
+
+The system shall support 3 content types:
+
+* Surah
+* Doa
+* Owaj
+
+### FR-K2. Shared Fields
+
+Each content item may include:
+
+* id
+* type
+* title
+* subtitle
+* Arabic text
+* Bengali meaning
+* Bengali notes / explanation
+* audio URL
+* YouTube video ID
+* thumbnail URL
+* sort order
+* category
+* isPublished
+* createdAt
+* updatedAt
+
+### FR-K3. Local User Data
+
+The app shall locally store:
+
+* favorites
+* theme choice
+* text size choice
+* default speed
+* meaning audio preference
+* last opened item, if implemented
+
+---
+
+## L. Search and Filtering Requirements
+
+### FR-L1. Version 1
+
+* Search is out of scope for Version 1.
+
+### FR-L2. Future
+
+* A future version may allow search by title within Surah, Doa, and Owaj.
+
+---
+
+## M. Network and Sync Requirements
+
+### FR-M1. Internet Requirement
+
+Internet shall be required for:
+
+* dynamic content refresh
+* remote streaming audio
+* Owaj playback from YouTube
+
+### FR-M2. Offline Behavior
+
+Without internet, the app shall still allow:
+
+* opening the app
+* viewing cached content if available
+* viewing favorites
+* changing settings
+
+### FR-M3. Refresh Failure
+
+If remote refresh fails:
+
+* the app shall not crash
+* previously cached data shall remain visible where possible
+
+---
+
+## N. Security and Access Requirements
+
+### FR-N1. End User Access
+
+* No login shall be required for the mother/end user in Version 1.
+
+### FR-N2. Admin Protection
+
+* Content editing must be restricted to the creator through backend/admin access only.
+
+### FR-N3. Public App Restrictions
+
+* The public mobile app shall not expose content edit capability.
+
+---
+
+## O. Performance Requirements
+
+### FR-O1. Fast Startup
+
+* The app should open quickly on normal Android devices.
+
+### FR-O2. Lightweight Lists
+
+* List screens shall load quickly and remain simple.
+
+### FR-O3. Smooth Playback
+
+* Audio playback should begin with minimal delay once content is available.
+
+### FR-O4. Low Visual Complexity
+
+* Animations shall be minimal and must not reduce usability.
+
+---
+
+## P. Accessibility Requirements
+
+### FR-P1. Font Scaling
+
+* Text must remain readable under larger text-size settings.
+
+### FR-P2. Contrast
+
+* Theme choices shall maintain readable contrast.
+
+### FR-P3. Simple Wording
+
+* UI wording shall remain short and easy to understand in Bengali.
+
+---
+
+## Q. Error and Empty-State Requirements
+
+### FR-Q1. No Content
+
+If a category has no content, show a simple message.
+
+### FR-Q2. Playback Error
+
+If media cannot play, show a simple retry message.
+
+### FR-Q3. Network Error
+
+If refresh fails, show a simple update-failed message.
+
+### FR-Q4. Empty Favorites
+
+If there are no favorites, show a simple empty-state message.
+
+---
+
+## R. Creator Operational Requirements
+
+### FR-R1. No Re-Release for Routine Updates
+
+* The creator must be able to maintain normal content updates without publishing a new app version.
+
+### FR-R2. Creator Update Actions
+
+The creator must be able to:
+
+* add new Owaj
+* replace old Owaj
+* add new Doa
+* edit Bengali meaning
+* edit Arabic text
+* reorder items
+* hide or publish items
+
+### FR-R3. Low-Maintenance Content Backend
+
+* The remote content source shall be simple enough for one developer to maintain.
+
+---
+
+# 7. Recommended MVP Scope
+
+## First Usable MVP Slice
+
+Implement this first:
+
+* project foundation
+* basic elderly-friendly UI
+* Home screen
+* Owaj list + detail
+* YouTube playback for Owaj
+* remote Owaj / YouTube list refresh
+* cached last Owaj list where possible
+
+## Included in Version 1
+
+After the first YouTube/Owaj slice, complete the rest of Version 1:
+
+* Surah list + detail
+* Doa list + detail
+* play/pause/resume/restart for Surah and Doa
+* speed control
+* Bengali meaning text
+* optional meaning audio toggle when audio exists
+* favorites for Surah, Doa, and Owaj
+* settings:
+
+  * theme
+  * text size
+  * default speed
+  * meaning audio default
+* dynamic remote content refresh for Surah, Doa, and Owaj
+* cached last content
+
+## Optional in Version 1
+
+* audio progress bar
+* resume position
+* richer thumbnail cards
+* last-played memory
+
+## Post-MVP
+
+* search
+* offline media downloads
+* notifications
+* advanced admin panel
+* recently played
+
+---
+
+# 8. Screen List
+
+Build screens in this order:
+
+1. Splash / App Start
+2. Home
+3. Owaj List
+4. Owaj Detail / YouTube Player
+5. Error / Empty-state components for Owaj
+6. Favorites
+7. Settings
+8. Surah List
+9. Surah Detail / Player
+10. Doa List
+11. Doa Detail / Player
+12. Shared Error / Empty-state components for all modules
+
+---
+
+# 9. Suggested User Flows
+
+## Flow 1: Surah
+
+Open app → tap Surah → choose Surah → open detail → press Play → adjust speed if needed → bookmark if desired
+
+## Flow 2: Doa
+
+Open app → tap Doa → choose Doa → press Play → read Bengali meaning → toggle meaning audio if available
+
+## Flow 3: Owaj
+
+Open app → tap Owaj → choose item → press Play
+
+## Flow 4: Favorites
+
+Open app → tap Favorites → choose saved item → open content
+
+## Flow 5: Settings
+
+Open app → tap Settings → adjust text size / speed / theme / meaning-audio preference
+
+---
+
+# 10. Final Data Model Draft
+
+## 10.1 Surah
+
+* id
+* title
+* arabicTitle
+* arabicText
+* bengaliMeaning
+* bengaliNotes
+* arabicAudioUrl
+* bengaliMeaningAudioUrl
+* thumbnailUrl
+* sortOrder
+* isPublished
+* updatedAt
+
+## 10.2 Doa
+
+* id
+* title
+* useCaseText
+* arabicText
+* bengaliMeaning
+* bengaliNotes
+* arabicAudioUrl
+* bengaliMeaningAudioUrl
+* thumbnailUrl
+* sortOrder
+* isPublished
+* updatedAt
+
+## 10.3 Owaj
+
+* id
+* title
+* speakerName
+* description
+* youtubeVideoId
+* thumbnailUrl
+* durationText
+* category
+* sortOrder
+* isPublished
+* updatedAt
+
+## 10.4 Favorite
+
+* id
+* contentId
+* contentType
+* savedAt
+
+## 10.5 UserSettings
+
+* theme
+* textSize
+* defaultPlaybackSpeed
+* playMeaningAudioByDefault
+
+---
+
+# 11. Non-Functional Requirements
+
+## NFR-1. Simplicity
+
+* The app must be simple enough for elderly use.
+
+## NFR-2. Maintainability
+
+* The codebase must remain modular and easy to extend.
+
+## NFR-3. Reliability
+
+* The app should not crash because of network failure, missing media, or empty content.
+
+## NFR-4. Readability
+
+* Bengali text must be clearly readable.
+* Arabic text must be clearly readable where shown.
+
+## NFR-5. Scalability
+
+* The content structure must allow more Surah, Doa, and Owaj items later.
+
+---
+
+# 12. Acceptance Criteria
+
+## First Usable YouTube/Owaj Slice
+
+The first usable slice will be considered complete if:
+
+1. the user can open the app and see the basic home screen
+2. the user can open the Owaj module
+3. the user can see an Owaj list loaded from the remote source
+4. the user can open an Owaj item
+5. the user can play the Owaj item from YouTube
+6. the creator can add, remove, reorder, publish, or unpublish Owaj items remotely without a new app release
+7. the app shows simple loading, empty, and error messages for the Owaj flow
+
+## Full Version 1 MVP
+
+The app will be considered ready for MVP if:
+
+1. the user can open the app and see 3 main menus
+2. the user can open an Owaj and play it from YouTube
+3. the creator can update remote Owaj content without a new app release
+4. the user can open a Surah and play Arabic recitation
+5. the user can change playback speed
+6. the user can read Bengali meaning
+7. the user can toggle meaning audio behavior when meaning audio exists
+8. the user can open a Doa and play recitation
+9. the user can bookmark Surah, Doa, and Owaj
+10. the user can see bookmarks later
+11. the user can change theme and text size
+12. the creator can update remote content for all modules without a new app release
+13. the app remains usable when internet temporarily fails
+
+---
+
+# 13. Recommended Build Sequence
+
+## Phase 1: Foundation and Basic UI
+
+* project structure
+* dependencies
+* navigation
+* basic theme
+* elderly-friendly reusable UI components
+* home screen with Surah, Doa, and Owaj entries
+
+## Phase 2: Owaj / YouTube Feature First
+
+* Owaj data model
+* Owaj list screen
+* Owaj detail screen
+* YouTube playback integration
+* Owaj loading, empty, and error states
+
+## Phase 3: Remote YouTube List Management
+
+* Firestore setup for Owaj collection
+* remote Owaj DTO/model mapping
+* fetch published Owaj items
+* sort by remote sort order
+* support publish/unpublish
+* support add/remove/reorder from remote source
+* cache last fetched Owaj list where possible
+
+## Phase 4: Favorites and Settings
+
+* favorites persistence
+* favorite toggle for Owaj first
+* settings storage
+* theme setting
+* text size setting
+* default playback settings for later Surah/Doa audio
+
+## Phase 5: Surah and Doa UI
+
+* Surah list/detail
+* Doa list/detail
+* Bengali meaning display
+* optional Arabic text display
+* bookmark support
+
+## Phase 6: Surah and Doa Audio
+
+* basic audio player
+* play/pause/resume/restart
+* speed control
+* optional meaning audio toggle
+
+## Phase 7: Full Remote Content and Offline Behavior
+
+* remote Surah and Doa loading
+* cached last content
+* offline fallback behavior
+* refresh flow
+
+## Phase 8: Elderly UX Polish, Testing, and Release
+
+* elderly UX polish
+* error states across all modules
+* testing
+* release preparation
+
+---
+
+# 14. Recommended Technical Assumptions for WBS
+
+Use these as the default technical baseline for planning:
+
+* UI: **Jetpack Compose**
+* Audio player: **Media3 / ExoPlayer**
+* Settings: **DataStore**
+* Favorites/local structured persistence: **Room**
+* Remote content metadata: **Firestore**
+* Owaj playback: **YouTube IFrame Player API**
+* First implementation target: **Owaj / YouTube list + remote update + playback before Surah/Doa audio**
+* Media hosting in V1:
+
+  * Surah/Doa audio = bundled local files or public HTTPS URLs
+  * Owaj = YouTube only
+* No Firebase Storage dependency in V1
