@@ -1,0 +1,49 @@
+# Gradle
+.gradle/
+build/
+*/build/
+
+# Local configuration
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Keystore / signing files
+*.jks
+*.keystore
+*.p12
+*.pem
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Kotlin / Java
+*.class
+
+# Generated files
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Google services
+# Usually okay to commit for normal Firebase Android apps,
+# but keep this ignored if your project is private-sensitive.
+# google-services.json
+
+# APK / AAB outputs
+*.apk
+*.aab
+*.ap_
+
+# Secrets / environment files
+.env
+.env.*
+secrets.properties
