@@ -4,6 +4,7 @@ build/
 */build/
 
 # Local configuration
+# Contains local paths and SDK locations
 local.properties
 
 # Android Studio / IntelliJ
@@ -11,8 +12,11 @@ local.properties
 *.iml
 *.ipr
 *.iws
+*.out
+.shelf/
 
 # Keystore / signing files
+# NEVER commit these
 *.jks
 *.keystore
 *.p12
@@ -34,9 +38,8 @@ captures/
 .cxx/
 
 # Google services
-# Usually okay to commit for normal Firebase Android apps,
-# but keep this ignored if your project is private-sensitive.
-# google-services.json
+# Keep this ignored to protect project API keys and secrets
+app/google-services.json
 
 # APK / AAB outputs
 *.apk
