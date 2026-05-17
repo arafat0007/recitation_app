@@ -50,9 +50,13 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+
+    // Icons
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // Media3
     implementation(libs.androidx.media3.exoplayer)
@@ -74,6 +78,9 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
+
+    // YouTube Player
+    implementation(libs.youtube.player)
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
