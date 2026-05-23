@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 class MockOwajRepository : OwajRepository {
     private val mockOwajs = listOf(
         Owaj(
-            id = "1",
+            id = "document_id_1",
             title = "মায়ের গুরুত্ব (The Importance of Mother)",
             speakerName = "মাওলানা মিজানুর রহমান আজহারী",
             description = "মায়ের মর্যাদা ও গুরুত্ব নিয়ে একটি সুন্দর ওয়াজ।",
@@ -19,7 +19,7 @@ class MockOwajRepository : OwajRepository {
             category = "ওয়াজ"
         ),
         Owaj(
-            id = "2",
+            id = "document_id_2",
             title = "জান্নাতের বর্ণনা (Description of Paradise)",
             speakerName = "শায়খ আহমাদুল্লাহ",
             description = "জান্নাত ও এর নেয়ামতসমূহ নিয়ে বিস্তারিত আলোচনা।",
@@ -29,7 +29,7 @@ class MockOwajRepository : OwajRepository {
             category = "ওয়াজ"
         ),
         Owaj(
-            id = "3",
+            id = "document_id_3",
             title = "ধৈর্যের ফজিলত (The Virtue of Patience)",
             speakerName = "মাওলানা তারিক জামিল",
             description = "বিপদে ধৈর্য ধারণের গুরুত্ব ও ফজিলত।",

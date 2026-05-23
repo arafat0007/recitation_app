@@ -3,7 +3,7 @@ package com.example.recitation_app.feature_owaj.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recitation_app.data.repository.MockOwajRepository
+import com.example.recitation_app.data.repository.OwajRepositoryImpl
 import com.example.recitation_app.domain.model.Owaj
 import com.example.recitation_app.domain.repository.OwajRepository
 import kotlinx.coroutines.flow.*
@@ -23,7 +23,7 @@ sealed class OwajDetailState {
 }
 
 class OwajViewModel(
-    private val repository: OwajRepository = MockOwajRepository() // Using Mock for now
+    private val repository: OwajRepository = OwajRepositoryImpl() // Using Real Repository
 ) : ViewModel() {
 
     private val _listState = MutableStateFlow<OwajListState>(OwajListState.Loading)
