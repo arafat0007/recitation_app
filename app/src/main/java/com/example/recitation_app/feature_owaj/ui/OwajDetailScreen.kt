@@ -1,6 +1,5 @@
 package com.example.recitation_app.feature_owaj.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,7 +25,6 @@ fun OwajDetailScreen(
 ) {
     val state by viewModel.detailState.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
-    var isPlaying by remember { mutableStateOf(false) }
 
     LaunchedEffect(owajId) {
         viewModel.loadOwajById(owajId)
@@ -69,44 +67,11 @@ fun OwajDetailScreen(
                             .padding(16.dp)
                             .verticalScroll(rememberScrollState())
                     ) {
-                        if (isPlaying) {
-                            YouTubePlayerCompose(
-                                videoId = owaj.youtubeVideoId,
-                                lifecycleOwner = lifecycleOwner,
-                                modifier = Modifier.height(250.dp)
-                            )
-                        } else {
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(250.dp),
-                                shape = MaterialTheme.shapes.medium
-                            ) {
-                                Box(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentAlignment = androidx.compose.ui.Alignment.Center
-                                ) {
-                                    Button(
-                                        onClick = { 
-                                            Log.d("FLOW", "OwajDetailScreen: Play button clicked")
-                                            isPlaying = true 
-                                        },
-                                        modifier = Modifier
-                                            .fillMaxWidth(0.8f)
-                                            .height(80.dp),
-                                        shape = MaterialTheme.shapes.large
-                                    ) {
-                                        Text(
-                                            "প্লে করুন (Play)",
-                                            style = MaterialTheme.typography.titleLarge.copy(
-                                                fontSize = 24.sp,
-                                                fontWeight = FontWeight.Bold
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        YouTubePlayerCompose(
+                            videoId = owaj.youtubeVideoId,
+                            lifecycleOwner = lifecycleOwner,
+                            modifier = Modifier.height(250.dp)
+                        )
 
                         Spacer(modifier = Modifier.height(24.dp))
 
