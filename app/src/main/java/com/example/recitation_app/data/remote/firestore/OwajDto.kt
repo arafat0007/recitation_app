@@ -1,6 +1,7 @@
 package com.example.recitation_app.data.remote.firestore
 
 import com.example.recitation_app.domain.model.Owaj
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.PropertyName
 
@@ -15,9 +16,14 @@ data class OwajDto(
     @get:PropertyName("category") @set:PropertyName("category") var category: String? = null,
     @get:PropertyName("sortOrder") @set:PropertyName("sortOrder") var sortOrder: Int = 0,
     @get:PropertyName("isPublished") @set:PropertyName("isPublished") var isPublished: Boolean = true,
-    @get:PropertyName("updatedAt") @set:PropertyName("updatedAt") var updatedAt: Long = System.currentTimeMillis()
+    @get:PropertyName("updatedAt") @set:PropertyName("updatedAt") var updatedAt: Any? = null
 ) {
     fun toDomain(): Owaj {
+        val updatedTime = when (val time = updatedAt) {
+            is Timestamp -> time.toDate().time
+            is Number -> time.toLong()
+            else -> System.currentTimeMillis()
+        }
         return Owaj(
             id = id,
             title = title,
@@ -29,7 +35,7 @@ data class OwajDto(
             category = category,
             sortOrder = sortOrder,
             isPublished = isPublished,
-            updatedAt = updatedAt
+            updatedAt = updatedTime
         )
     }
 }
