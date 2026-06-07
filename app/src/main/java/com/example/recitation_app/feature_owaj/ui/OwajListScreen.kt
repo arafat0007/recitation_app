@@ -1,13 +1,11 @@
 package com.example.recitation_app.feature_owaj.ui
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.recitation_app.core.ui.EmptyView
 import com.example.recitation_app.core.ui.ErrorView
+import com.example.recitation_app.core.ui.LargeBengaliButton
 import com.example.recitation_app.core.ui.LoadingView
 import com.example.recitation_app.domain.model.Owaj
 
@@ -45,25 +44,18 @@ fun OwajListScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = onBackClick,
+                        onClick = {
+                            if (state is OwajListState.Selection) {
+                                onBackClick()
+                            } else {
+                                viewModel.showSelection()
+                            }
+                        },
                         modifier = Modifier.size(84.dp)
                     ) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            modifier = Modifier.size(54.dp),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = { viewModel.loadOwajs() },
-                        modifier = Modifier.size(84.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.Refresh,
-                            contentDescription = "Refresh",
                             modifier = Modifier.size(54.dp),
                             tint = MaterialTheme.colorScheme.primary
                         )
@@ -75,27 +67,72 @@ fun OwajListScreen(
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
             when (val listState = state) {
+                is OwajListState.Selection -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(24.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        LargeBengaliButton(
+                            text = "না দেখা ওয়াজ",
+                            onClick = { viewModel.loadOwajs(watched = false) }
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        LargeBengaliButton(
+                            text = "দেখা ওয়াজ",
+                            onClick = { viewModel.loadOwajs(watched = true) }
+                        )
+                    }
+                }
                 is OwajListState.Loading -> LoadingView()
                 is OwajListState.Success -> {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(listState.owajs) { owaj ->
-                            OwajItem(
-                                owaj = owaj, 
-                                onClick = { 
-                                    Log.d("FLOW", "OwajListScreen: Item clicked: ${owaj.title} (id: ${owaj.id})")
-                                    onOwajClick(owaj.id) 
-                                }
-                            )
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            modifier = Modifier.weight(1f),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            items(listState.owajs) { owaj ->
+                                OwajItem(
+                                    owaj = owaj, 
+                                    onClick = { onOwajClick(owaj.id) }
+                                )
+                            }
+                        }
+                        
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Button(
+                                onClick = { viewModel.previousPage() },
+                                enabled = listState.hasPrevious,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(64.dp)
+                            ) {
+                                Text("আগের", fontSize = 20.sp)
+                            }
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Button(
+                                onClick = { viewModel.nextPage() },
+                                enabled = listState.hasNext,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(64.dp)
+                            ) {
+                                Text("পরের", fontSize = 20.sp)
+                            }
                         }
                     }
                 }
                 is OwajListState.Error -> ErrorView(
                     message = listState.message,
-                    onRetry = { viewModel.loadOwajs() }
+                    onRetry = { viewModel.showSelection() }
                 )
                 is OwajListState.Empty -> EmptyView(message = "কোন ওয়াজ পাওয়া যায়নি")
             }
@@ -140,13 +177,6 @@ fun OwajItem(
                         color = MaterialTheme.colorScheme.secondary
                     )
                 )
-                if (owaj.durationText != null) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "সময়: ${owaj.durationText}",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
             }
         }
     }

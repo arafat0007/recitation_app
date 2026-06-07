@@ -2,9 +2,11 @@ package com.example.recitation_app.data.repository
 
 import com.example.recitation_app.domain.model.Owaj
 import com.example.recitation_app.domain.repository.OwajRepository
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 class MockOwajRepository : OwajRepository {
     private val mockOwajs = listOf(
@@ -13,7 +15,7 @@ class MockOwajRepository : OwajRepository {
             title = "মায়ের গুরুত্ব (The Importance of Mother)",
             speakerName = "মাওলানা মিজানুর রহমান আজহারী",
             description = "মায়ের মর্যাদা ও গুরুত্ব নিয়ে একটি সুন্দর ওয়াজ।",
-            youtubeVideoId = "dQw4w9WgXcQ", // Replace with real ID later
+            youtubeVideoId = "dQw4w9WgXcQ",
             thumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
             durationText = "১০:২৫",
             category = "ওয়াজ"
@@ -40,14 +42,25 @@ class MockOwajRepository : OwajRepository {
         )
     )
 
-    override fun getOwajs(): Flow<List<Owaj>> = flow {
-        emit(emptyList()) // Simulate loading start
-        delay(1000) // Simulate network delay
-        emit(mockOwajs)
+    override fun getPaginatedOwajs(
+        pageSize: Long,
+        startAfter: DocumentSnapshot?,
+        endBefore: DocumentSnapshot?
+    ): Flow<OwajRepository.PaginatedOwajs> = flow {
+        delay(1000)
+        emit(OwajRepository.PaginatedOwajs(mockOwajs, null, null))
     }
 
     override fun getOwajById(id: String): Flow<Owaj?> = flow {
         delay(500)
         emit(mockOwajs.find { it.id == id })
     }
+
+    override fun getWatchedVideoIds(userId: String): Flow<List<String>> = flowOf(emptyList())
+
+    override suspend fun toggleWatchedStatus(userId: String, owajId: String, isWatched: Boolean) {
+        // Mock
+    }
+
+    override fun getWatchedStatus(userId: String, owajId: String): Flow<Boolean> = flowOf(false)
 }

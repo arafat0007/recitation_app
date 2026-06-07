@@ -7,8 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import android.app.Activity
 import com.example.recitation_app.core.ui.LargeBengaliButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,6 +23,7 @@ fun HomeScreen(
     onFavoritesClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -40,9 +44,9 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(24.dp)
+                .padding(horizontal = 24.dp, vertical = 8.dp)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LargeBengaliButton(
@@ -60,8 +64,6 @@ fun HomeScreen(
                 onClick = onOwajClick
             )
             
-            Spacer(modifier = Modifier.height(20.dp))
-            
             LargeBengaliButton(
                 text = "প্রিয় তালিকা",
                 onClick = onFavoritesClick
@@ -71,6 +73,24 @@ fun HomeScreen(
                 text = "সেটিংস",
                 onClick = onSettingsClick
             )
+
+            Button(
+                onClick = { (context as? Activity)?.finish() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(85.dp),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = MaterialTheme.colorScheme.onError
+                )
+            ) {
+                Text(
+                    "অ্যাপ থেকে বের হোন",
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }

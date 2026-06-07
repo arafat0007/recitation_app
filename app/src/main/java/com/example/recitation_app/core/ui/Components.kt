@@ -21,7 +21,7 @@ fun LargeBengaliButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp),
+            .height(100.dp),
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
@@ -32,7 +32,7 @@ fun LargeBengaliButton(
             text = text,
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
+                fontSize = 28.sp
             )
         )
     }

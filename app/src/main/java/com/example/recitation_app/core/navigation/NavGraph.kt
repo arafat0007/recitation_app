@@ -7,6 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.recitation_app.feature_auth.ui.LoginScreen
+import com.example.recitation_app.feature_auth.ui.RegisterScreen
 import com.example.recitation_app.feature_home.ui.HomeScreen
 import com.example.recitation_app.feature_owaj.ui.OwajDetailScreen
 import com.example.recitation_app.feature_owaj.ui.OwajListScreen
@@ -15,8 +17,34 @@ import com.example.recitation_app.feature_owaj.ui.OwajListScreen
 fun AppNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Login.route
     ) {
+        composable(Screen.Login.route) {
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                },
+                onNavigateToRegister = {
+                    navController.navigate(Screen.Register.route)
+                }
+            )
+        }
+
+        composable(Screen.Register.route) {
+            RegisterScreen(
+                onRegisterSuccess = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                },
+                onBackToLogin = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
         composable(Screen.Home.route) {
             Log.d("FLOW", "NavGraph: Navigating to Home Screen")
             HomeScreen(

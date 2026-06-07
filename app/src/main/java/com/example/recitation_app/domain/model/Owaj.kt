@@ -11,5 +11,6 @@ data class Owaj(
     val category: String? = null,
     val sortOrder: Int = 0,
     val isPublished: Boolean = true,
-    val updatedAt: Long = System.currentTimeMillis()
+    val updatedAt: Long = System.currentTimeMillis(),
+    val isWatched: Boolean = false
 )
