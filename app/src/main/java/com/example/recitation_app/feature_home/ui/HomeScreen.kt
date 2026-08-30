@@ -55,7 +55,7 @@ fun HomeScreen(
             )
             
             LargeBengaliButton(
-                text = "দোয়া",
+                text = "দোয়া ও যিকির",
                 onClick = onDoaClick
             )
             
@@ -86,7 +86,7 @@ fun HomeScreen(
                 )
             ) {
                 Text(
-                    "অ্যাপ থেকে বের হোন",
+                    "বের হোন",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold
                 )

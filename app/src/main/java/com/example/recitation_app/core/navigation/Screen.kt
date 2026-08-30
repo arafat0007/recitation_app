@@ -7,6 +7,10 @@ sealed class Screen(val route: String) {
         fun createRoute(surahId: String) = "surah_detail/$surahId"
     }
     object DoaList : Screen("doa_list")
+    object PostSalahAdhkar : Screen("post_salah_adhkar")
+    object AdhkarDetail : Screen("adhkar_detail/{adhkarId}/{salahKey}") {
+        fun createRoute(adhkarId: String, salahKey: String) = "adhkar_detail/$adhkarId/$salahKey"
+    }
     object DoaDetail : Screen("doa_detail/{doaId}") {
         fun createRoute(doaId: String) = "doa_detail/$doaId"
     }
@@ -18,4 +22,5 @@ sealed class Screen(val route: String) {
     object Settings : Screen("settings")
     object Login : Screen("login")
     object Register : Screen("register")
+    object ZikirList : Screen("zikir_list")
 }
